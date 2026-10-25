@@ -1,226 +1,65 @@
-/* Tradition Threads — static GitHub Pages demo.
-   Sample products/prices only. No real payment or server-side order storage. */
+/* Tradition Threads — enhanced static GitHub Pages prototype. */
 "use strict";
-
-const PRODUCTS = [
-  {id:1,name:"Embroidered Festive Kurta",culture:"Indian",occasion:"Festival",price:39,tag:"Student favourite",image:"https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=750&q=80"},
-  {id:2,name:"Classic Celebration Saree",culture:"Indian",occasion:"Wedding",price:59,tag:"Special occasion",image:"https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=750&q=80"},
-  {id:3,name:"Ankara Print Outfit",culture:"African",occasion:"Cultural Day",price:45,tag:"Colourful pick",image:"https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&w=750&q=80"},
-  {id:4,name:"Lightweight Yukata Style",culture:"Japanese",occasion:"Festival",price:48,tag:"Festival ready",image:"https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=750&q=80"},
-  {id:5,name:"Everyday Printed Kurta",culture:"South Asian",occasion:"Everyday",price:25,tag:"Budget friendly",image:"https://images.unsplash.com/photo-1597983073493-88cd35cf93e0?auto=format&fit=crop&w=750&q=80"},
-  {id:6,name:"Traditional Occasion Set",culture:"Indian",occasion:"Cultural Day",price:52,tag:"Featured",image:"https://images.unsplash.com/photo-1583391733956-6c78276477e8?auto=format&fit=crop&w=750&q=80"},
-  {id:7,name:"Patterned Festival Wrap",culture:"African",occasion:"Festival",price:32,tag:"Easy to style",image:"https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=750&q=80"},
-  {id:8,name:"Ceremony Accessories Set",culture:"South Asian",occasion:"Wedding",price:18,tag:"Finishing touch",image:"https://images.unsplash.com/photo-1617038220319-276d3cfab638?auto=format&fit=crop&w=750&q=80"}
+const PRODUCTS=[
+{id:1,name:"Embroidered Festive Kurta",culture:"Indian",occasion:"Festival",price:39,tag:"Student favourite",rating:"4.9",image:"https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=850&q=80",description:"A festive-inspired kurta concept for cultural celebrations and special gatherings. Confirm fabric, colour, sizing and supplier details before purchase."},
+{id:2,name:"Classic Celebration Saree",culture:"Indian",occasion:"Wedding",price:59,tag:"Special occasion",rating:"4.8",image:"https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=850&q=80",description:"A sample saree listing for wedding events and formal celebrations. Actual drape, fabric, blouse details and included accessories must be confirmed."},
+{id:3,name:"Ankara Print Outfit",culture:"African",occasion:"Cultural Day",price:45,tag:"Colourful pick",rating:"4.9",image:"https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&w=850&q=80",description:"A colourful outfit concept inspired by bold print styling. This is an editorial placeholder; verify the garment's cultural origin and details with a supplier."},
+{id:4,name:"Lightweight Yukata Style",culture:"Japanese",occasion:"Festival",price:48,tag:"Festival ready",rating:"4.7",image:"https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=850&q=80",description:"A listing concept inspired by lightweight festival garments. Confirm whether the actual item is a yukata, robe or contemporary fashion piece before describing it for sale."},
+{id:5,name:"Everyday Printed Kurta",culture:"South Asian",occasion:"Everyday",price:25,tag:"Budget friendly",rating:"4.8",image:"https://images.unsplash.com/photo-1597983073493-88cd35cf93e0?auto=format&fit=crop&w=850&q=80",description:"A budget-minded everyday style concept. Check material, wash instructions, fit and size chart with the supplier."},
+{id:6,name:"Traditional Occasion Set",culture:"Indian",occasion:"Cultural Day",price:52,tag:"Featured",rating:"4.8",image:"https://images.unsplash.com/photo-1583391733956-6c78276477e8?auto=format&fit=crop&w=850&q=80",description:"A sample coordinated outfit listing for school cultural days and family celebrations. Confirm exactly which pieces are included in the set."},
+{id:7,name:"Patterned Festival Wrap",culture:"African",occasion:"Festival",price:32,tag:"Easy to style",rating:"4.6",image:"https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=850&q=80",description:"A sample patterned wrap concept for a festival wardrobe. Confirm textile, dimensions, origin and care guidance before publishing a real product listing."},
+{id:8,name:"Ceremony Accessories Set",culture:"South Asian",occasion:"Wedding",price:18,tag:"Finishing touch",rating:"4.7",image:"https://images.unsplash.com/photo-1617038220319-276d3cfab638?auto=format&fit=crop&w=850&q=80",description:"A sample accessory listing for finishing a celebration outfit. The image is illustrative; verify the actual items, materials and set contents."},
+{id:9,name:"Festive Layered Ensemble",culture:"South Asian",occasion:"Festival",price:49,tag:"New discovery",rating:"4.8",image:"https://images.unsplash.com/photo-1597983073493-88cd35cf93e0?auto=format&fit=crop&w=850&q=80",description:"A sample layered-look concept for festivals and community celebrations. Confirm the exact garment and whether any accessories are included."},
+{id:10,name:"Celebration Statement Piece",culture:"Indian",occasion:"Wedding",price:68,tag:"Occasion wear",rating:"4.9",image:"https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=850&q=80",description:"A higher-price sample listing for a special occasion. Final price, stock, fabric, tailoring, and delivery are not confirmed."}
 ];
-
-const $ = (selector) => document.querySelector(selector);
-const productGrid = $("#productGrid");
-const cartDrawer = $("#cartDrawer");
-let cart = loadCart();
-let toastTimer;
-
-function formatMoney(amount) {
-  return new Intl.NumberFormat("en-CA", {style:"currency", currency:"CAD"}).format(amount);
+const ARTICLES={
+occasion:{title:"Start with the occasion",body:["Before choosing an outfit, consider where you will wear it and whether the event has any dress expectations. Cultural days, festivals, weddings and family celebrations may each call for different styles.","Comfort matters too. Think about the weather, how long you will wear the outfit, movement, footwear and any accessories you may need. When unsure, ask the event organiser or someone familiar with the tradition."]},
+respect:{title:"Learn the story behind it",body:["Traditional clothing can connect to region, family, history, ceremony, religion, identity and personal meaning. A garment may have different uses or meanings in different communities.","Be curious and respectful. Learn from people and sources connected to the tradition, avoid treating every culture as the same, and describe clothing accurately. When possible, support artisans and suppliers who can explain the pieces they offer."]},
+budget:{title:"Find a fit for your budget",body:["Start with a budget and compare the complete cost—not only the listed price. Ask about sizing, accessories, tailoring, shipping, pickup, taxes, returns and care.","Planning ahead may give you more choices. If the project team offers pre-orders, check the deadline and the terms before committing. Borrowing or reusing clothing can also be a practical option for a one-time event."]}
+};
+const $=s=>document.querySelector(s);let cart=load("tt-cart",[]),wishes=load("tt-wishes",[]),selectedSize="M",toastTimer;
+function load(key,fallback){try{const v=JSON.parse(localStorage.getItem(key));return Array.isArray(v)?v:fallback}catch{return fallback}}
+function persist(){try{localStorage.setItem("tt-cart",JSON.stringify(cart));localStorage.setItem("tt-wishes",JSON.stringify(wishes))}catch{}}
+function money(n){return new Intl.NumberFormat("en-CA",{style:"currency",currency:"CAD"}).format(n)}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function getProduct(id){return PRODUCTS.find(p=>p.id===Number(id))}
+function renderProducts(){
+ const q=$("#searchInput").value.trim().toLowerCase(),c=$("#cultureFilter").value,o=$("#occasionFilter").value,price=$("#priceFilter").value,sort=$("#sortFilter").value;
+ let list=PRODUCTS.filter(p=>(`${p.name} ${p.culture} ${p.occasion} ${p.tag}`).toLowerCase().includes(q)&&(c==="All"||p.culture===c)&&(o==="All"||p.occasion===o)&&(price==="all"||(price==="under30"&&p.price<30)||(price==="30to50"&&p.price>=30&&p.price<=50)||(price==="over50"&&p.price>50)));
+ if(sort==="low")list.sort((a,b)=>a.price-b.price);if(sort==="high")list.sort((a,b)=>b.price-a.price);if(sort==="az")list.sort((a,b)=>a.name.localeCompare(b.name));
+ $("#productCount").textContent=`${list.length} piece${list.length===1?"":"s"}`;$("#resultText").textContent=list.length===PRODUCTS.length?"Showing all sample products":`Showing ${list.length} matching product${list.length===1?"":"s"}`;
+ const grid=$("#productGrid");grid.innerHTML="";
+ if(!list.length){grid.innerHTML='<div class="no-results"><b>No pieces found.</b><p>Try another search or reset your filters.</p></div>';return}
+ list.forEach(p=>{const el=document.createElement("article");el.className="product-card";el.innerHTML=`<div class="product-image" data-detail="${p.id}" role="button" tabindex="0" aria-label="View ${esc(p.name)} details"><img src="${p.image}" alt="${esc(p.name)}" loading="lazy"><span class="product-tag">${esc(p.tag)}</span><button class="wish-button ${wishes.includes(p.id)?"active":""}" data-wish="${p.id}" aria-label="${wishes.includes(p.id)?"Remove from":"Save to"} favourites">${wishes.includes(p.id)?"♥":"♡"}</button></div><div class="product-info"><div class="product-meta">${esc(p.culture)} · ${esc(p.occasion)}</div><h3 data-detail="${p.id}" tabindex="0">${esc(p.name)}</h3><div class="rating"><span>★★★★★</span> ${p.rating} <span style="color:#928779">· sample rating</span></div><div class="product-bottom"><span class="price">${money(p.price)} <small>CAD</small></span><button class="add-button" data-add="${p.id}" aria-label="Add ${esc(p.name)} to bag">+</button></div></div>`;grid.appendChild(el)})
 }
-function loadCart() {
-  try {
-    const parsed = JSON.parse(localStorage.getItem("traditionThreadsCart") || "[]");
-    return Array.isArray(parsed) ? parsed.filter(item => PRODUCTS.some(p => p.id === item.id) && Number.isInteger(item.qty) && item.qty > 0) : [];
-  } catch { return []; }
-}
-function saveCart() {
-  try { localStorage.setItem("traditionThreadsCart", JSON.stringify(cart)); } catch { /* Storage may be unavailable; cart still works for this visit. */ }
-}
-function renderProducts() {
-  const query = $("#searchInput").value.trim().toLowerCase();
-  const culture = $("#cultureFilter").value;
-  const occasion = $("#occasionFilter").value;
-  const sort = $("#sortFilter").value;
-  let list = PRODUCTS.filter(p =>
-    `${p.name} ${p.culture} ${p.occasion} ${p.tag}`.toLowerCase().includes(query) &&
-    (culture === "All" || p.culture === culture) &&
-    (occasion === "All" || p.occasion === occasion)
-  );
-  if (sort === "low") list.sort((a,b) => a.price - b.price);
-  if (sort === "high") list.sort((a,b) => b.price - a.price);
-  $("#productCount").textContent = `${list.length} sample product${list.length === 1 ? "" : "s"}`;
-  $("#activeFilterText").textContent = list.length === PRODUCTS.length ? "Showing all sample products" : `Showing ${list.length} matching product${list.length === 1 ? "" : "s"}`;
-  productGrid.innerHTML = "";
-  if (!list.length) {
-    productGrid.innerHTML = '<div class="no-results"><strong>No outfits found.</strong><p>Try a different search or clear your filters.</p></div>';
-    return;
-  }
-  list.forEach(product => {
-    const card = document.createElement("article");
-    card.className = "product-card";
-    card.innerHTML = `
-      <div class="product-image">
-        <img src="${product.image}" alt="${escapeHTML(product.name)}" loading="lazy">
-        <span class="product-tag">${escapeHTML(product.tag)}</span>
-      </div>
-      <div class="product-info">
-        <div class="product-meta">${escapeHTML(product.culture)} · ${escapeHTML(product.occasion)}</div>
-        <h3>${escapeHTML(product.name)}</h3>
-        <div class="product-bottom">
-          <span class="product-price">${formatMoney(product.price)} <small>CAD</small></span>
-          <button class="add-button" type="button" aria-label="Add ${escapeHTML(product.name)} to bag" data-add="${product.id}">+</button>
-        </div>
-      </div>`;
-    productGrid.appendChild(card);
-  });
-}
-function escapeHTML(value) {
-  return String(value).replace(/[&<>"']/g, char => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[char]));
-}
-function addToCart(id) {
-  const found = cart.find(item => item.id === id);
-  if (found) found.qty += 1;
-  else cart.push({id, qty:1});
-  saveCart();
-  renderCart();
-  const product = PRODUCTS.find(p => p.id === id);
-  showToast(`${product.name} added to your bag`);
-}
-function changeQuantity(id, change) {
-  const item = cart.find(entry => entry.id === id);
-  if (!item) return;
-  item.qty += change;
-  if (item.qty < 1) cart = cart.filter(entry => entry.id !== id);
-  saveCart();
-  renderCart();
-}
-function removeFromCart(id) {
-  cart = cart.filter(entry => entry.id !== id);
-  saveCart();
-  renderCart();
-}
-function renderCart() {
-  const count = cart.reduce((total,item) => total + item.qty, 0);
-  const total = cart.reduce((sum,item) => {
-    const product = PRODUCTS.find(p => p.id === item.id);
-    return sum + (product ? product.price * item.qty : 0);
-  }, 0);
-  $("#cartCount").textContent = count;
-  $("#drawerCount").textContent = `(${count})`;
-  $("#cartTotal").textContent = formatMoney(total);
-  const container = $("#cartItems");
-  if (!cart.length) {
-    container.innerHTML = '<p class="empty-cart">Your bag is empty.<br>Explore the collection and add an outfit you like.</p>';
-    $("#orderButton").disabled = true;
-    $("#orderButton").style.opacity = ".55";
-    return;
-  }
-  $("#orderButton").disabled = false;
-  $("#orderButton").style.opacity = "1";
-  container.innerHTML = "";
-  cart.forEach(item => {
-    const product = PRODUCTS.find(p => p.id === item.id);
-    if (!product) return;
-    const row = document.createElement("div");
-    row.className = "cart-line";
-    row.innerHTML = `
-      <img src="${product.image}" alt="">
-      <div>
-        <h3>${escapeHTML(product.name)}</h3>
-        <small>${formatMoney(product.price)} each</small>
-        <div class="quantity-control">
-          <button type="button" data-qty="-1" data-id="${product.id}" aria-label="Decrease quantity">−</button>
-          <span>${item.qty}</span>
-          <button type="button" data-qty="1" data-id="${product.id}" aria-label="Increase quantity">+</button>
-        </div>
-        <button class="remove-item" type="button" data-remove="${product.id}">Remove</button>
-      </div>
-      <span class="line-total">${formatMoney(product.price * item.qty)}</span>`;
-    container.appendChild(row);
-  });
-}
-function openCart() {
-  document.body.classList.add("cart-open");
-  cartDrawer.setAttribute("aria-hidden","false");
-  $("#closeCart").focus();
-}
-function closeCart() {
-  document.body.classList.remove("cart-open");
-  cartDrawer.setAttribute("aria-hidden","true");
-  $("#openCart").focus();
-}
-function showToast(message) {
-  const toast = $("#toast");
-  toast.textContent = message;
-  toast.classList.add("visible");
-  window.clearTimeout(toastTimer);
-  toastTimer = window.setTimeout(() => toast.classList.remove("visible"), 2600);
-}
-function resetFilters() {
-  $("#searchInput").value = "";
-  $("#cultureFilter").value = "All";
-  $("#occasionFilter").value = "All";
-  $("#sortFilter").value = "featured";
-  renderProducts();
-}
-function chooseCulture(culture) {
-  $("#cultureFilter").value = culture;
-  renderProducts();
-  $("#shop").scrollIntoView({behavior:"smooth"});
-}
-function prepareOrderEnquiry() {
-  if (!cart.length) {
-    showToast("Your bag is empty.");
-    return;
-  }
-  const lines = cart.map(item => {
-    const p = PRODUCTS.find(product => product.id === item.id);
-    return `${p.name} — quantity ${item.qty} — ${formatMoney(p.price * item.qty)}`;
-  });
-  const total = cart.reduce((sum,item) => sum + PRODUCTS.find(p => p.id === item.id).price * item.qty, 0);
-  const body = `Hello, I would like to ask about these sample items from Tradition Threads:\n\n${lines.join("\n")}\n\nEstimated sample subtotal: ${formatMoney(total)} CAD\n\nPlease confirm availability, sizes, final prices, and delivery/pickup options.\n\nName:\nPreferred contact:`;
-  const subject = "Tradition Threads — Order Enquiry";
-  // No email address has been supplied in the project charter; open a prepared draft in the visitor's email app.
-  window.location.href = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-  showToast("Order enquiry prepared. Choose an email app to continue.");
-}
-function prepareFeedback(event) {
-  event.preventDefault();
-  const form = event.currentTarget;
-  const data = new FormData(form);
-  const subject = "Tradition Threads — Student Feedback";
-  const body = `Name: ${data.get("name")}\nEmail: ${data.get("email")}\nInterested in: ${data.get("interest")}\n\nMessage:\n${data.get("message")}`;
-  // Replace the blank mailto recipient with the real project email before publishing.
-  window.location.href = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-  showToast("Feedback email draft prepared.");
-}
-
-productGrid.addEventListener("click", event => {
-  const button = event.target.closest("[data-add]");
-  if (button) addToCart(Number(button.dataset.add));
-});
-$("#cartItems").addEventListener("click", event => {
-  const quantityButton = event.target.closest("[data-qty]");
-  const removeButton = event.target.closest("[data-remove]");
-  if (quantityButton) changeQuantity(Number(quantityButton.dataset.id), Number(quantityButton.dataset.qty));
-  if (removeButton) removeFromCart(Number(removeButton.dataset.remove));
-});
-$("#searchInput").addEventListener("input", renderProducts);
-["cultureFilter","occasionFilter","sortFilter"].forEach(id => $(`#${id}`).addEventListener("change", renderProducts));
-$("#clearFilters").addEventListener("click", resetFilters);
-document.querySelectorAll("[data-culture]").forEach(button => button.addEventListener("click", () => chooseCulture(button.dataset.culture)));
-$("#openCart").addEventListener("click", openCart);
-$("#closeCart").addEventListener("click", closeCart);
-$("#continueShopping").addEventListener("click", closeCart);
-$("#cartBackdrop").addEventListener("click", closeCart);
-$("#orderButton").addEventListener("click", prepareOrderEnquiry);
-$("#feedbackForm").addEventListener("submit", prepareFeedback);
-$("#menuToggle").addEventListener("click", () => {
-  const nav = $("#navLinks");
-  const isOpen = nav.classList.toggle("open");
-  $("#menuToggle").setAttribute("aria-expanded", String(isOpen));
-  $("#menuToggle").setAttribute("aria-label", isOpen ? "Close navigation" : "Open navigation");
-});
-$("#navLinks").querySelectorAll("a").forEach(link => link.addEventListener("click", () => {
-  $("#navLinks").classList.remove("open");
-  $("#menuToggle").setAttribute("aria-expanded","false");
-}));
-document.addEventListener("keydown", event => { if (event.key === "Escape" && document.body.classList.contains("cart-open")) closeCart(); });
-$("#year").textContent = new Date().getFullYear();
-renderProducts();
-renderCart();
+function renderCart(){let count=cart.reduce((n,x)=>n+x.qty,0),total=cart.reduce((n,x)=>n+(getProduct(x.id)?.price||0)*x.qty,0);$("#cartCount").textContent=count;$("#drawerCount").textContent=`(${count})`;$("#cartTotal").textContent=money(total);$("#wishCount").textContent=wishes.length;const box=$("#cartItems");box.innerHTML="";if(!cart.length){box.innerHTML='<p class="empty-cart">Your bag is empty.<br>Explore the collection and add a piece you like.</p>';$("#orderButton").disabled=true;$("#orderButton").style.opacity=".55";return}$("#orderButton").disabled=false;$("#orderButton").style.opacity="1";cart.forEach(item=>{const p=getProduct(item.id);if(!p)return;const el=document.createElement("div");el.className="cart-line";el.innerHTML=`<img src="${p.image}" alt=""><div><h3>${esc(p.name)}</h3><small>${money(p.price)} each · size ${esc(item.size||"M")}</small><div class="quantity"><button data-qty="-1" data-id="${p.id}" data-size="${esc(item.size||"M")}">−</button><span>${item.qty}</span><button data-qty="1" data-id="${p.id}" data-size="${esc(item.size||"M")}">+</button></div><button class="remove-line" data-remove="${p.id}" data-size="${esc(item.size||"M")}">Remove</button></div><span class="line-price">${money(p.price*item.qty)}</span>`;box.appendChild(el)})}
+function addToCart(id,size="M"){const item=cart.find(x=>x.id===Number(id)&&x.size===size);if(item)item.qty++;else cart.push({id:Number(id),size,qty:1});persist();renderCart();showToast("Added to your bag")}
+function changeQty(id,size,delta){const item=cart.find(x=>x.id===id&&x.size===size);if(!item)return;item.qty+=delta;if(item.qty<1)cart=cart.filter(x=>x!==item);persist();renderCart()}
+function toggleWish(id){id=Number(id);wishes=wishes.includes(id)?wishes.filter(x=>x!==id):[...wishes,id];persist();renderProducts();renderCart();showToast(wishes.includes(id)?"Saved to favourites":"Removed from favourites")}
+function showToast(s){const t=$("#toast");t.textContent=s;t.classList.add("visible");clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove("visible"),2300)}
+function openCart(){document.body.classList.add("cart-open");$("#cartDrawer").setAttribute("aria-hidden","false");$("#closeCart").focus()}
+function closeCart(){document.body.classList.remove("cart-open");$("#cartDrawer").setAttribute("aria-hidden","true")}
+function openModal(id){const p=getProduct(id);if(!p)return;selectedSize="M";$("#modalContent").innerHTML=`<div class="product-detail"><img src="${p.image}" alt="${esc(p.name)}"><div class="product-detail-copy"><div class="eyebrow">${esc(p.culture)} · ${esc(p.occasion)}</div><h2 id="modalTitle">${esc(p.name)}</h2><div class="detail-price">${money(p.price)} <small>CAD · sample price</small></div><p>${esc(p.description)}</p><p><b>Availability:</b> To be confirmed with supplier.</p><label class="detail-label">Choose a size (demo)</label><div class="size-options">${["XS","S","M","L","XL"].map(s=>`<button class="size-option ${s===selectedSize?"selected":""}" data-size-choice="${s}">${s}</button>`).join("")}</div><div class="detail-actions"><button class="btn btn-dark" id="modalAdd">Add to bag <span>↗</span></button><button class="detail-wish" id="modalWish" aria-label="Save favourite">${wishes.includes(p.id)?"♥":"♡"}</button></div><p>Prototype listing: verify garment details, fabric, size chart, stock and final price before ordering.</p></div></div>`;$("#productModal").classList.add("open");document.body.classList.add("modal-open");$("#modalAdd").addEventListener("click",()=>{addToCart(p.id,selectedSize);closeProductModal()});$("#modalWish").addEventListener("click",()=>{toggleWish(p.id);$("#modalWish").textContent=wishes.includes(p.id)?"♥":"♡"})}
+function closeProductModal(){$("#productModal").classList.remove("open");document.body.classList.remove("modal-open")}
+function openWishlist(){const box=$("#wishlistItems");box.innerHTML="";if(!wishes.length)box.innerHTML='<p class="empty-cart">No favourites saved yet. Tap the heart on any product to keep it here.</p>';wishes.forEach(id=>{const p=getProduct(id);if(!p)return;const row=document.createElement("div");row.className="saved-line";row.innerHTML=`<img src="${p.image}" alt=""><div><b>${esc(p.name)}</b><small>${money(p.price)} CAD · ${esc(p.culture)}</small></div><button data-unwish="${p.id}" aria-label="Remove favourite">×</button>`;box.appendChild(row)});$("#wishlistModal").classList.add("open");document.body.classList.add("modal-open")}
+function closeWishlist(){$("#wishlistModal").classList.remove("open");document.body.classList.remove("modal-open")}
+function prepareOrder(){if(!cart.length)return;const lines=cart.map(x=>{const p=getProduct(x.id);return `${p.name} / size ${x.size} / quantity ${x.qty} / ${money(p.price*x.qty)}`});const total=cart.reduce((n,x)=>n+getProduct(x.id).price*x.qty,0);const body=`Hello, I would like to ask about these sample items from Tradition Threads:\n\n${lines.join("\n")}\n\nSample subtotal: ${money(total)} CAD\n\nPlease confirm availability, size chart, final pricing, pickup/delivery options, and order terms.\n\nName:\nPreferred contact:`;window.location.href=`mailto:?subject=${encodeURIComponent("Tradition Threads — Order Enquiry")}&body=${encodeURIComponent(body)}`;showToast("Order enquiry email draft prepared")}
+function prepareFeedback(e){e.preventDefault();const d=new FormData(e.currentTarget);const body=`Name: ${d.get("name")}\nEmail: ${d.get("email")}\nInterested in: ${d.get("interest")}\n\nMessage:\n${d.get("message")}`;window.location.href=`mailto:?subject=${encodeURIComponent("Tradition Threads — Student Feedback")}&body=${encodeURIComponent(body)}`;showToast("Feedback email draft prepared")}
+function openArticle(key){const a=ARTICLES[key];if(!a)return;$("#articleTitle").textContent=a.title;$("#articleBody").innerHTML=a.body.map(p=>`<p>${esc(p)}</p>`).join("");$("#articleModal").classList.add("open");document.body.classList.add("modal-open")}
+function closeArticle(){$("#articleModal").classList.remove("open");document.body.classList.remove("modal-open")}
+$("#productGrid").addEventListener("click",e=>{const wish=e.target.closest("[data-wish]"),add=e.target.closest("[data-add]"),detail=e.target.closest("[data-detail]");if(wish){e.stopPropagation();toggleWish(wish.dataset.wish)}else if(add)addToCart(add.dataset.add);else if(detail)openModal(detail.dataset.detail)});
+$("#productGrid").addEventListener("keydown",e=>{if((e.key==="Enter"||e.key===" ")&&e.target.matches("[data-detail]")){e.preventDefault();openModal(e.target.dataset.detail)}});
+$("#cartItems").addEventListener("click",e=>{const q=e.target.closest("[data-qty]"),r=e.target.closest("[data-remove]");if(q)changeQty(Number(q.dataset.id),q.dataset.size,Number(q.dataset.qty));if(r){const id=Number(r.dataset.remove),size=r.dataset.size;cart=cart.filter(x=>!(x.id===id&&x.size===size));persist();renderCart()}});
+$("#wishlistItems").addEventListener("click",e=>{const b=e.target.closest("[data-unwish]");if(b){toggleWish(b.dataset.unwish);openWishlist()}});
+["searchInput","cultureFilter","occasionFilter","priceFilter","sortFilter"].forEach(id=>$("#"+id).addEventListener(id==="searchInput"?"input":"change",renderProducts));
+$("#clearFilters").addEventListener("click",()=>{$("#searchInput").value="";$("#cultureFilter").value="All";$("#occasionFilter").value="All";$("#priceFilter").value="all";$("#sortFilter").value="featured";renderProducts()});
+document.querySelectorAll("[data-culture]").forEach(b=>b.addEventListener("click",()=>{$("#cultureFilter").value=b.dataset.culture;renderProducts();$("#shop").scrollIntoView({behavior:"smooth"})}));
+$("#openCart").addEventListener("click",openCart);$("#closeCart").addEventListener("click",closeCart);$("#continueShopping").addEventListener("click",closeCart);$("#cartOverlay").addEventListener("click",closeCart);$("#orderButton").addEventListener("click",prepareOrder);
+$("#feedbackForm").addEventListener("submit",prepareFeedback);$("#wishlistJump").addEventListener("click",openWishlist);
+$("#closeProduct").addEventListener("click",closeProductModal);$("#productModal").addEventListener("click",e=>{if(e.target===$("#productModal"))closeProductModal()});
+$("#closeArticle").addEventListener("click",closeArticle);$("#articleModal").addEventListener("click",e=>{if(e.target===$("#articleModal"))closeArticle()});
+$("#closeWishlist").addEventListener("click",closeWishlist);$("#wishlistModal").addEventListener("click",e=>{if(e.target===$("#wishlistModal"))closeWishlist()});
+document.querySelectorAll("[data-article]").forEach(b=>b.addEventListener("click",()=>openArticle(b.dataset.article)));
+$("#menuToggle").addEventListener("click",()=>{const opened=$("#nav").classList.toggle("open");$("#menuToggle").setAttribute("aria-expanded",String(opened))});$("#nav").querySelectorAll("a").forEach(a=>a.addEventListener("click",()=>{$("#nav").classList.remove("open");$("#menuToggle").setAttribute("aria-expanded","false")}));
+document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeCart();closeProductModal();closeArticle();closeWishlist()}});
+$("#year").textContent=new Date().getFullYear();renderProducts();renderCart();

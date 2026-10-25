@@ -1,72 +1,45 @@
-# Tradition Threads — Traditional Attire for Students
+# Tradition Threads — Advanced GitHub Pages Website
 
-A responsive static website prototype for the **Traditional Attire for Students** project. It is designed to publish on **GitHub Pages** and uses plain HTML, CSS, and JavaScript—no build tools or paid hosting are required.
+A richer static website prototype for the **Traditional Attire for Students** project charter. Built with HTML, CSS, and vanilla JavaScript; no build step is needed.
 
-## Included features
+## Features
+- Editorial-style responsive design and mobile navigation
+- Culture collections and cultural journal with article modals
+- 10 illustrative products with product-detail modals and sample sizes
+- Search, culture, occasion, price-range filters and sorting
+- Saved favourites / wishlist
+- Shopping bag with size selection, quantity controls, remove items and subtotal calculation
+- Cart and wishlist persistence in the browser with `localStorage`
+- Order enquiry and feedback email drafts
+- About/story section, shopping steps, FAQ and feedback form
+- Keyboard access for product detail cards, labels, reduced-motion support
+- CAD currency display and clear prototype disclaimers
 
-- Responsive homepage and cultural collection cards
-- Sample product catalogue with prices displayed in CAD
-- Search, culture and occasion filters, and price sorting
-- Shopping bag with quantity controls, remove item, subtotal calculation, and browser `localStorage`
-- Order-enquiry email draft generated from the shopping bag
-- Feedback form that prepares an email draft
-- About section, project purpose, and how-it-works section
-- Keyboard-friendly buttons, labels, focus states, and reduced-motion support
+## Publish the update to your existing GitHub repository
+Your repository is `alpeshrp23/tradition-threads`.
 
-## Publish using GitHub Pages
+1. Download and unzip `tradition_threads_advanced_project.zip`.
+2. Open https://github.com/alpeshrp23/tradition-threads
+3. Click **Add file → Upload files**.
+4. Upload the new `index.html`, `styles.css`, `script.js`, `README.md`, `.nojekyll`, and the `assets` folder (with `favicon.svg`) from this extracted project. These files should replace the older files with the same names.
+5. Scroll down, enter a commit message such as `Upgrade Tradition Threads website`, and click **Commit changes**.
+6. GitHub Pages should publish the new files from `main` and `/(root)`. Wait a few minutes, then refresh https://alpeshrp23.github.io/tradition-threads/ using Ctrl+F5 (Windows) or Cmd+Shift+R (Mac).
 
-1. Sign in to GitHub and create a **new public repository**. A repository name such as `tradition-threads` is fine.
-2. Download and unzip the project ZIP on your computer.
-3. Upload the contents of the `tradition_threads_github_pages` folder to the **root** of the repository. Make sure `index.html` is directly in the repository root—not inside an extra nested folder.
-4. In the repository, open **Settings → Pages**.
-5. Under **Build and deployment**, choose **Deploy from a branch**.
-6. Select branch **main** and folder **/(root)**, then click **Save**.
-7. Wait for the Pages deployment to finish. The published URL will appear in **Settings → Pages** and usually looks like `https://YOUR-USERNAME.github.io/REPOSITORY-NAME/`.
-8. Whenever you change the site, commit or upload the updated files to `main`; GitHub Pages will publish the update.
+If uploading the `assets` folder is difficult, open the folder in the GitHub file upload dialog and drag its `favicon.svg` file along with the root files; preserve the `assets/favicon.svg` path. The favicon is optional, but the other four root files are required.
 
-GitHub may take a few minutes to publish a new site. Use the exact URL shown in repository Settings → Pages.
+## Important before real sales
+This remains a front-end demo. Sample products, prices, ratings, sizing, and images are illustrative, not verified supplier inventory or reviews. Some image URLs are editorial placeholders and may not depict the exact named garment. Confirm permissions and product accuracy before publishing real listings.
 
-## Before publishing to real customers
+GitHub Pages does not run server-side code. The cart and wishlist are stored only in the visitor's browser. The order and feedback actions open an email draft using `mailto:`; no email is sent automatically and no order is stored. A blank recipient is intentional because the project charter did not provide an approved contact email. Configure the real project email or a form provider before launch.
 
-This is a front-end demo. The project charter estimates CAD $145 for a domain and hosting; GitHub Pages can host a static project site at no hosting charge for a public repository, subject to GitHub's current terms. A custom domain is optional and must be registered separately.
+For real commerce, connect a secure hosted checkout / store provider or backend. Do not collect card details in this static site. Add real supplier data, size charts, shipping/pickup terms, returns policy and privacy notice before accepting orders.
 
-**Please complete these items before treating it as a live store:**
-
-1. **Verify products and prices.** The eight products and prices are examples, not supplier quotes or confirmed stock. Replace them with products your team can actually source.
-2. **Use approved product images.** The demo uses externally hosted Unsplash image URLs. Confirm each image is suitable and available; for a production shop, use images you have permission to publish and consider storing optimized copies in `assets/`.
-3. **Connect feedback.** The feedback form opens a pre-filled email draft. It does not automatically send or store a message. Replace the blank `mailto:` recipient in `script.js` with a project email address, or connect a form provider.
-4. **Connect real orders and payments.** GitHub Pages cannot run server-side code. Do not collect card details in this page. Use a reputable hosted checkout/store provider or a secure backend if real orders, stock, customer accounts, or payments are needed.
-5. **Set policies and contact information.** Add the real project email, delivery/pickup information, return policy, privacy notice, and supplier/stock details before public sales.
-6. **Check all content and images.** Some images are editorial placeholders and may not depict the exact named garment. Replace any image that does not accurately represent the product.
-
-## Editing the catalogue
-
-Open `script.js` and find `const PRODUCTS = [...]`. Each product has these fields:
-
-```js
-{
-  id: 1,
-  name: "Embroidered Festive Kurta",
-  culture: "Indian",
-  occasion: "Festival",
-  price: 39,
-  tag: "Student favourite",
-  image: "https://example.com/your-image.jpg"
-}
-```
-
-- Keep each `id` unique.
-- `culture` should match one of the options in `index.html`: `Indian`, `African`, `Japanese`, or `South Asian`.
-- `occasion` should match `Festival`, `Cultural Day`, `Wedding`, or `Everyday`.
-- `price` is a sample amount in Canadian dollars.
-- Use an image URL that is publicly accessible, or add an image to `assets/` and use a relative path such as `assets/kurta.jpg`.
-
-To change the project name, update the page `<title>`, the logo text in `index.html`, and any relevant README text.
+## Edit products
+Edit `const PRODUCTS = [...]` near the top of `script.js`. Product fields include `id`, `name`, `culture`, `occasion`, `price`, `tag`, `rating`, `image`, and `description`. Keep IDs unique. Filter values must match the options in `index.html`.
 
 ## Project structure
-
 ```text
-tradition_threads_github_pages/
+tradition_threads_advanced/
 ├── index.html
 ├── styles.css
 ├── script.js
@@ -75,7 +48,3 @@ tradition_threads_github_pages/
 └── assets/
     └── favicon.svg
 ```
-
-## Project alignment
-
-The website supports the project charter's aims to make traditional attire easier for students to discover, provide a catalogue with prices and descriptions, promote cultural inclusion, gather student preferences, and prepare a convenient ordering path. Supplier sourcing, real stock, final pricing, and live order processing remain project tasks.
